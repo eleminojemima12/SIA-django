@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete {{ pet.pet_name }} | Pet Management System</title>
+    <link rel="stylesheet" href="{% static 'Elemino_app/styles.css' %}">
+</head>
+<body>
+    <main class="shell confirm-shell">
+        <section class="confirm-card">
+            <p class="eyebrow danger">Delete pet</p>
+            <h1>Remove {{ pet.pet_name }}?</h1>
+            <p>Are you sure you want to permanently delete <strong>{{ pet.pet_name }}</strong> from the pet registry? This action cannot be undone.</p>
+            <form method="post" class="confirm-actions">
+                {% csrf_token %}
+                <a href="{% url 'pet_list' %}" class="secondary-button">Cancel</a>
+                <button type="submit" class="danger-button">Delete pet</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
+

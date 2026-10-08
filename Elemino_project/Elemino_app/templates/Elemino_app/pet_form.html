@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} | Pet Management System</title>
+    <link rel="stylesheet" href="{% static 'Elemino_app/styles.css' %}">
+</head>
+<body>
+    <main class="shell form-shell">
+        <header class="page-header detail-header form-page-header">
+            <div class="header-copy">
+                <a class="back-link" href="{% url 'pet_list' %}">← Back to all pets</a>
+                <p class="eyebrow">A little more love in the registry</p>
+                <h1>{{ title }}</h1>
+                <p class="form-intro-copy">Add the important details now so every visit, reminder, and happy milestone has a place to belong.</p>
+            </div>
+            <div class="form-illustration" aria-hidden="true"><span>🐾</span></div>
+        </header>
+
+        <section class="panel form-panel" aria-label="Pet information form">
+            <div class="panel-header">
+                <div>
+                    <p class="panel-kicker">Let’s get to know them</p>
+                    <h2>Pet profile</h2>
+                </div>
+                <p class="required-note"><span aria-hidden="true">*</span> All fields are required</p>
+            </div>
+
+            {% if form.non_field_errors %}
+                <div class="form-alert">{{ form.non_field_errors }}</div>
+            {% endif %}
+
+            <form method="post" class="styled-form">
+                {% csrf_token %}
+
+                <section class="form-section" aria-labelledby="pet-details-heading">
+                    <div class="section-heading">
+                        <span class="form-step">01</span>
+                        <div>
+                            <h2 id="pet-details-heading">About your pet</h2>
+                            <p class="section-hint">Start with the details that make them unique.</p>
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        {% for field in form %}
+                            {% if field.name == 'pet_id' or field.name == 'pet_name' or field.name == 'pet_type' or field.name == 'breed' or field.name == 'age' or field.name == 'gender' %}
+                                <div class="field">
+                                    {{ field.label_tag }}
+                                    {{ field }}
+                                    {% if field.errors %}<ul class="field-error">{{ field.errors }}</ul>{% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <section class="form-section" aria-labelledby="owner-details-heading">
+                    <div class="section-heading">
+                        <span class="form-step form-step-lilac">02</span>
+                        <div>
+                            <h2 id="owner-details-heading">Their person</h2>
+                            <p class="section-hint">Add a contact so the right person is always easy to reach.</p>
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        {% for field in form %}
+                            {% if field.name == 'owner_name' or field.name == 'contact_number' or field.name == 'date_registered' %}
+                                <div class="field">
+                                    {{ field.label_tag }}
+                                    {{ field }}
+                                    {% if field.errors %}<ul class="field-error">{{ field.errors }}</ul>{% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <div class="form-actions">
+                    <a class="secondary-button" href="{% url 'pet_list' %}">Cancel</a>
+                    <button class="primary-button" type="submit">{% if pet %}Save changes{% else %}Save pet profile{% endif %} <span aria-hidden="true">→</span></button>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

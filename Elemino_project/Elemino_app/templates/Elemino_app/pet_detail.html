@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ pet.pet_name }} | Pet Management System</title>
+    <link rel="stylesheet" href="{% static 'Elemino_app/styles.css' %}">
+</head>
+<body>
+    <main class="shell detail-shell">
+        <header class="page-header detail-header">
+            <div class="header-copy">
+                <a class="back-link" href="{% url 'pet_list' %}">← Back to all pets</a>
+                <p class="eyebrow">Pet profile</p>
+                <h1>{{ pet.pet_name }}</h1>
+            </div>
+            <div class="action-group">
+                <a class="secondary-button" href="{% url 'pet_update' pet.pk %}">Edit profile</a>
+                <a class="danger-button" href="{% url 'pet_delete' pet.pk %}">Delete</a>
+            </div>
+        </header>
+
+        <section class="hero-card" aria-label="Pet overview">
+            <div class="pet-profile">
+                <div class="pet-profile-main">
+                    <div class="pet-spotlight">{{ pet.pet_name|first|upper }}</div>
+                    <div>
+                        <p class="meta-line">Pet ID #{{ pet.pet_id }}</p>
+                        <h2>{{ pet.pet_name }}</h2>
+                    </div>
+                </div>
+                <span class="pet-type">{{ pet.pet_type }}</span>
+            </div>
+        </section>
+
+        <section class="info-grid" aria-label="Pet details">
+            <article class="info-card">
+                <div class="label">Breed</div>
+                <div class="value">{{ pet.breed }}</div>
+            </article>
+            <article class="info-card">
+                <div class="label">Age</div>
+                <div class="value">{{ pet.age }} years</div>
+            </article>
+            <article class="info-card">
+                <div class="label">Gender</div>
+                <div class="value">{{ pet.gender }}</div>
+            </article>
+            <article class="info-card">
+                <div class="label">Owner</div>
+                <div class="value">{{ pet.owner_name }}</div>
+            </article>
+            <article class="info-card">
+                <div class="label">Contact Number</div>
+                <div class="value">{{ pet.contact_number }}</div>
+            </article>
+            <article class="info-card">
+                <div class="label">Date Registered</div>
+                <div class="value">{{ pet.date_registered }}</div>
+            </article>
+        </section>
+    </main>
+</body>
+</html>
+
