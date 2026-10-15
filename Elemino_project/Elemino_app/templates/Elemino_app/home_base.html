@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Paw &amp; Co{% endblock %} | Pet Management</title>
+    <link rel="stylesheet" href="{% static 'Elemino_app/styles.css' %}?v=create-account-20261015">
+</head>
+<body class="home-page">
+    <main class="shell">
+        <nav class="home-nav" aria-label="Main navigation">
+            <a class="brand-mark" href="{% url 'index' %}" aria-label="Paw & Co home">
+                <span aria-hidden="true">✦</span> Paw &amp; Co
+            </a>
+            <div class="home-nav-links">
+                <a href="{% url 'index' %}"{% if active_page == 'home' %} class="active" aria-current="page"{% endif %}><span aria-hidden="true">⌂</span> Home</a>
+                <a href="{% url 'dashboard' %}"{% if active_page == 'dashboard' %} class="active" aria-current="page"{% endif %}><span aria-hidden="true">▦</span> Dashboard</a>
+                <a href="{% url 'pet_list' %}"{% if active_page == 'management' %} class="active" aria-current="page"{% endif %}><span aria-hidden="true">▤</span> Pet Management</a>
+                <a href="{% url 'pet_gallery' %}"{% if active_page == 'gallery' %} class="active" aria-current="page"{% endif %}><span aria-hidden="true">✿</span> Pet Gallery</a>
+            </div>
+            <div class="nav-account">
+                {% if user.is_authenticated %}
+                    <span class="nav-user">{{ user.username }}</span>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button class="nav-auth-button" type="submit">Sign out</button>
+                    </form>
+                {% else %}
+                    <a class="nav-auth-button" href="{% url 'login' %}">Log in</a>
+                    <a class="nav-auth-button nav-signup-link" href="{% url 'account_create' %}">Create account</a>
+                {% endif %}
+            </div>
+            <a class="nav-add-button" href="{% url 'pet_create' %}"><span aria-hidden="true">+</span> Add pet</a>
+        </nav>
+
+        <div class="home-content">
+            {% block content %}{% endblock %}
+            <footer class="home-footer">
+                <span class="brand-mark"><span aria-hidden="true">✦</span> Paw &amp; Co</span>
+                <span>Made with care for every companion.</span>
+            </footer>
+        </div>
+    </main>
+</body>
+</html>

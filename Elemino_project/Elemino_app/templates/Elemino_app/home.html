@@ -1,0 +1,48 @@
+{% extends 'Elemino_app/home_base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <header class="page-header hero-banner welcome-hero">
+        <div class="header-copy">
+            <p class="eyebrow">Welcome to Paw &amp; Co</p>
+            <h1>A happier home for every pet.</h1>
+            <p class="hero-description">Keep your pet family organized, discover everyone in your care, and make every profile easy to find.</p>
+            <div class="welcome-actions">
+                <a class="welcome-light-button" href="{% url 'dashboard' %}">Explore dashboard <span aria-hidden="true">→</span></a>
+                <a class="welcome-text-link" href="{% url 'pet_create' %}">+ Add a pet</a>
+            </div>
+        </div>
+        <div class="welcome-art" aria-hidden="true"><span>✦</span><i>♥</i></div>
+    </header>
+
+    <section class="welcome-intro">
+        <p class="panel-kicker">Made for your whole crew</p>
+        <h2>Everything about your pets, all together.</h2>
+        <p>Browse the registry, check in on the latest profiles, or take a look through the gallery.</p>
+    </section>
+
+    <section class="welcome-links" aria-label="Explore Paw & Co">
+        <a class="welcome-link-card" href="{% url 'dashboard' %}">
+            <span class="welcome-link-icon">⌂</span>
+            <span><strong>Your dashboard</strong><small>See a quick overview and recent pets.</small></span>
+            <span class="gallery-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="welcome-link-card" href="{% url 'pet_list' %}">
+            <span class="welcome-link-icon welcome-link-icon-lilac">▤</span>
+            <span><strong>Pet management</strong><small>View and update the full pet registry.</small></span>
+            <span class="gallery-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="welcome-link-card" href="{% url 'pet_gallery' %}">
+            <span class="welcome-link-icon welcome-link-icon-pink">✿</span>
+            <span><strong>Pet gallery</strong><small>Meet every companion in your care.</small></span>
+            <span class="gallery-arrow" aria-hidden="true">↗</span>
+        </a>
+    </section>
+
+    <section class="welcome-count">
+        <span class="welcome-count-icon" aria-hidden="true">✦</span>
+        <p><strong>{{ total_pets }}</strong> {% if total_pets == 1 %}pet has{% else %}pets have{% endif %} a place in your registry.</p>
+        <a class="section-jump-link" href="{% url 'pet_gallery' %}">Meet them <span aria-hidden="true">→</span></a>
+    </section>
+{% endblock %}

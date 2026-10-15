@@ -1,0 +1,69 @@
+{% extends 'Elemino_app/home_base.html' %}
+
+{% block title %}Pet Management{% endblock %}
+
+{% block content %}
+    <header class="page-header subpage-hero">
+        <div class="header-copy">
+            <p class="eyebrow">All in one place</p>
+            <h1>Pet management</h1>
+            <p class="subpage-description">Keep every pet’s profile and their person’s details organized.</p>
+        </div>
+        <a class="primary-button" href="{% url 'pet_create' %}"><span aria-hidden="true">+</span> Add a pet</a>
+    </header>
+
+    <section class="panel management-panel" aria-labelledby="management-heading">
+        <div class="panel-header">
+            <div>
+                <p class="panel-kicker">Pet registry</p>
+                <h2 id="management-heading">Registered pets</h2>
+            </div>
+            <span class="gallery-count">{{ performances|length }} {% if performances|length == 1 %}pet{% else %}pets{% endif %}</span>
+        </div>
+
+        {% if performances %}
+            <div class="table-wrap">
+                <table class="pet-table">
+                    <thead>
+                        <tr>
+                            <th>Pet ID</th>
+                            <th>Pet Name</th>
+                            <th>Type</th>
+                            <th>Breed</th>
+                            <th>Age</th>
+                            <th>Owner</th>
+                            <th>Contact</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pet in performances %}
+                            <tr>
+                                <td>#{{ pet.pet_id }}</td>
+                                <td>
+                                    <div class="pet-name-cell">
+                                        <span class="pet-avatar">{{ pet.pet_name|first|upper }}</span>
+                                        <a href="{% url 'pet_detail' pet.pk %}">{{ pet.pet_name }}</a>
+                                    </div>
+                                </td>
+                                <td><span class="pet-type">{{ pet.pet_type }}</span></td>
+                                <td>{{ pet.breed }}</td>
+                                <td>{{ pet.age }}</td>
+                                <td>{{ pet.owner_name }}</td>
+                                <td>{{ pet.contact_number }}</td>
+                                <td>{{ pet.date_registered }}</td>
+                                <td class="actions-cell">
+                                    <a class="inline-link" href="{% url 'pet_update' pet.pk %}">Edit</a>
+                                    <a class="inline-link" href="{% url 'pet_delete' pet.pk %}">Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="empty-state">No pets have been added yet. Add your first pet to start the registry.</div>
+        {% endif %}
+    </section>
+{% endblock %}

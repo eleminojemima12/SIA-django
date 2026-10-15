@@ -1,0 +1,65 @@
+{% extends 'Elemino_app/home_base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <header class="page-header hero-banner dashboard-hero">
+        <div class="header-copy">
+            <p class="eyebrow">Your little corner of care</p>
+            <h1>Every pet has a story.</h1>
+            <p class="hero-description">A happy home for the pets you love and the details that keep them cared for.</p>
+        </div>
+        <a class="primary-button" href="{% url 'pet_create' %}"><span aria-hidden="true">+</span> Add a pet</a>
+    </header>
+
+    <section class="dashboard-overview" aria-labelledby="dashboard-heading">
+        <div class="section-title-row">
+            <div>
+                <p class="panel-kicker">At a glance</p>
+                <h2 id="dashboard-heading">Your pet dashboard</h2>
+            </div>
+            <a class="section-jump-link" href="{% url 'pet_list' %}">View pet records <span aria-hidden="true">→</span></a>
+        </div>
+        <section class="stats-grid" aria-label="Pet summary">
+            <article class="stat-card">
+                <span class="stat-label">Total pets</span>
+                <strong>{{ total_pets }}</strong>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Breeds tracked</span>
+                <strong>{{ unique_breeds }}</strong>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Latest record</span>
+                <strong>{% if latest_pet %}{{ latest_pet.pet_name }}{% else %}—{% endif %}</strong>
+            </article>
+        </section>
+    </section>
+
+    <section class="dashboard-recent panel" aria-labelledby="recent-pets-heading">
+        <div class="panel-header">
+            <div>
+                <p class="panel-kicker">Recently registered</p>
+                <h2 id="recent-pets-heading">Your latest companions</h2>
+            </div>
+            <a class="section-jump-link" href="{% url 'pet_gallery' %}">Open gallery <span aria-hidden="true">→</span></a>
+        </div>
+        {% if recent_pets %}
+            <div class="dashboard-pet-list">
+                {% for pet in recent_pets %}
+                    <a class="dashboard-pet-row" href="{% url 'pet_detail' pet.pk %}">
+                        <span class="pet-avatar">{{ pet.pet_name|first|upper }}</span>
+                        <span class="dashboard-pet-name">
+                            <strong>{{ pet.pet_name }}</strong>
+                            <small>{{ pet.pet_type }} · {{ pet.breed }}</small>
+                        </span>
+                        <span class="dashboard-pet-date">{{ pet.date_registered }}</span>
+                        <span class="gallery-arrow" aria-hidden="true">↗</span>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">Your dashboard will show recent pets once you add your first profile.</div>
+        {% endif %}
+    </section>
+{% endblock %}

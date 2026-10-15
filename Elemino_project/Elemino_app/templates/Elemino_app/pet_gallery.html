@@ -1,0 +1,42 @@
+{% extends 'Elemino_app/home_base.html' %}
+
+{% block title %}Pet Gallery{% endblock %}
+
+{% block content %}
+    <header class="page-header subpage-hero gallery-page-hero">
+        <div class="header-copy">
+            <p class="eyebrow">Meet the whole crew</p>
+            <h1>Pet gallery</h1>
+            <p class="subpage-description">A little snapshot of every companion in your care.</p>
+        </div>
+        <span class="gallery-count">{{ total_pets }} {% if total_pets == 1 %}pet{% else %}pets{% endif %}</span>
+    </header>
+
+    {% if performances %}
+        <section class="gallery-grid gallery-page-grid" aria-label="Registered pets">
+            {% for pet in performances %}
+                <a class="gallery-card" href="{% url 'pet_detail' pet.pk %}">
+                    <div class="gallery-art">
+                        <span class="gallery-paw" aria-hidden="true">✦</span>
+                        <span class="gallery-initial">{{ pet.pet_name|first|upper }}</span>
+                        <span class="gallery-type">{{ pet.pet_type }}</span>
+                    </div>
+                    <div class="gallery-card-content">
+                        <div>
+                            <h3>{{ pet.pet_name }}</h3>
+                            <p>{{ pet.breed }}</p>
+                        </div>
+                        <span class="gallery-arrow" aria-hidden="true">↗</span>
+                    </div>
+                </a>
+            {% endfor %}
+        </section>
+    {% else %}
+        <div class="gallery-empty">
+            <span aria-hidden="true">✦</span>
+            <h3>Your gallery is waiting</h3>
+            <p>Add your first pet and their profile will appear here.</p>
+            <a class="primary-button" href="{% url 'pet_create' %}">Add your first pet</a>
+        </div>
+    {% endif %}
+{% endblock %}
